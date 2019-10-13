@@ -3,10 +3,21 @@ import QtQuick.Window 2.2
 
 
 Window {
+
+    property var fileList
+
+    onFileListChanged: {
+        console.log("Lista:")
+            for(var property in fileList)
+                console.log(property)
+            console.log("fine Lista")
+    }
+
+
     id: window
     visible: true
     width: 640
-    height: 480
+    height: 520
     title: qsTr("QtComuneQml")
 
     Rectangle {
@@ -20,20 +31,6 @@ Window {
         anchors.top: parent.top
         anchors.topMargin: 0
 
-        Image {
-            id: image
-            x: 0
-            height: 100
-            anchors.top: parent.top
-            anchors.topMargin: 20
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            fillMode: Image.PreserveAspectFit
-            source: "images/Langhirano-Stemma.png"
-        }
-
         Text {
             id: txtTitolo
             x: 0
@@ -46,6 +43,16 @@ Window {
             anchors.left: parent.left
             anchors.leftMargin: 0
             font.pixelSize: 44
+
+            Image {
+                id: image5
+                x: 540
+                y: 35
+                width: 100
+                height: 80
+                fillMode: Image.PreserveAspectFit
+                source: "images/mail.gif"
+            }
         }
 
         Text {
@@ -61,6 +68,25 @@ Window {
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 14
         }
+
+        Image {
+            id: image
+            x: 270
+            y: 27
+            width: 100
+            height: 100
+            fillMode: Image.PreserveAspectFit
+            source: "images/Langhirano-Stemma.png"
+        }
+
+        Image {
+            id: image2
+            x: 72
+            y: 22
+            width: 100
+            height: 100
+            source: "images/ParmaCalcio.png"
+        }
     }
 
     Rectangle {
@@ -73,14 +99,14 @@ Window {
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
+        anchors.bottomMargin: -147
 
         Image {
             id: image1
-            x: 270
-            y: 65
-            width: 100
-            height: 100
+            x: 170
+            y: 46
+            width: 300
+            height: 325
             source: "qrc:/qtquickplugin/images/template_image.png"
         }
     }
