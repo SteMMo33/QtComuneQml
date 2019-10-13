@@ -4,14 +4,14 @@ import QtQuick.Window 2.2
 
 Window {
 
-    property var fileList
+    // property var fileList
 
-    onFileListChanged: {
+    /* onFileListChanged: {
         console.log("Lista:")
             for(var property in fileList)
                 console.log(property)
             console.log("fine Lista")
-    }
+    } */
 
 
     id: window
@@ -43,16 +43,6 @@ Window {
             anchors.left: parent.left
             anchors.leftMargin: 0
             font.pixelSize: 44
-
-            Image {
-                id: image5
-                x: 540
-                y: 35
-                width: 100
-                height: 80
-                fillMode: Image.PreserveAspectFit
-                source: "images/mail.gif"
-            }
         }
 
         Text {
@@ -107,7 +97,41 @@ Window {
             y: 46
             width: 300
             height: 325
-            source: "qrc:/qtquickplugin/images/template_image.png"
+            source: fileList[0]
+
+            /* Connections {
+                target: fileList
+                onDataChanged: console.log("The application data changed!")
+            } */
+        }
+
+        ListView {
+            id: listView
+            x: 522
+            y: 8
+            width: 110
+            height: 160
+            model: fileDataModel
+            delegate: Item {
+                x: 5
+                width: 80
+                height: 40
+                Row {
+                    id: row1
+                    Rectangle {
+                        width: 40
+                        height: 40
+                        // color: colorCode
+                    }
+
+                    Text {
+                        text: modelData.m_path
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.bold: true
+                    }
+                    spacing: 10
+                }
+            }
         }
     }
 
