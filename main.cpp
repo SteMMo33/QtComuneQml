@@ -24,7 +24,10 @@ int main(int argc, char *argv[])
 
     // Leggere i files contenuti in una cartella predefinita
     // e creare una lista
-    QDir dir = QDir("/home/stefano/Scrivania/Foto/2012 Oltre");
+
+    // QDir dir = QDir("/home/stefano/Scrivania/Foto/2012 Oltre");
+    QDir dir = QDir("C:\\Users\\A.Rubiconi\\Pictures\\Screenshots");
+
     QFileInfoList infoList = dir.entryInfoList();
     QStringList stringList = dir.entryList();
     QList<MyMedia*> contentList;
@@ -48,6 +51,8 @@ int main(int argc, char *argv[])
 
     context->setContextProperty("fileList", QVariant::fromValue(contentList));
     context->setContextProperty("fileDataModel", QVariant::fromValue(contentList));
+
+    // context->setContextProperty("fileDataModel", stringList); - ok con text: "Q "+modelData
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     return app.exec();

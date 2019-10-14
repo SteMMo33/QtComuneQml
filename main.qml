@@ -1,17 +1,18 @@
 import QtQuick 2.7
 import QtQuick.Window 2.2
+import QtMultimedia 5.5
 
 
 Window {
 
-    // property var fileList
+    property var fileList
 
-    /* onFileListChanged: {
+    onFileListChanged: {
         console.log("Lista:")
             for(var property in fileList)
                 console.log(property)
             console.log("fine Lista")
-    } */
+    }
 
 
     id: window
@@ -19,6 +20,21 @@ Window {
     width: 640
     height: 520
     title: qsTr("QtComuneQml")
+
+
+    property int idx : 0;
+
+    Timer {
+        id : tim
+        interval: 2000
+        running: true
+        repeat: true
+        onTriggered: {
+            ++idx;
+            text1.text = idx
+            console.log(fileList)
+        }
+    }
 
     Rectangle {
         id: idHeader
@@ -89,20 +105,36 @@ Window {
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: -147
+        anchors.bottomMargin: 0
 
         Image {
-            id: image1
-            x: 170
-            y: 46
+            id: divImage
+            x: 211
+            y: 40
             width: 300
             height: 325
-            source: fileList[0]
+            source: fileList
 
             /* Connections {
                 target: fileList
                 onDataChanged: console.log("The application data changed!")
             } */
+
+            MouseArea {
+                onClicked: {
+                    console.log("Click")
+                    setTi
+                }
+            }
+        }
+
+        Video {
+            id: divVideo
+            x: 8
+            y: 62
+            width: 200
+            height: 200
+
         }
 
         ListView {
@@ -113,6 +145,7 @@ Window {
             height: 160
             model: fileDataModel
             delegate: Item {
+                id: itemRowFile
                 x: 5
                 width: 80
                 height: 40
@@ -125,13 +158,22 @@ Window {
                     }
 
                     Text {
-                        text: modelData.m_path
+                        text: "Q "+modelData.path
                         anchors.verticalCenter: parent.verticalCenter
                         font.bold: true
                     }
                     spacing: 10
                 }
             }
+        }
+
+        Text {
+            id: text1
+            x: 8
+            y: 8
+            text: qsTr("NN")
+            font.bold: true
+            font.pixelSize: 22
         }
     }
 
