@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 
     QFileInfoList infoList = dir.entryInfoList();
     QStringList stringList = dir.entryList();
-    QList<MyMedia*> contentList;
+    QList<QObject*> contentList;
 
     qDebug() << "List: " << infoList.count();
     for (int i=0; i < infoList.count(); i++){
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
         if (info.isDir()) continue;
 
-        contentList.append( new MyMedia(info.absolutePath()));
+        contentList.append( new MyMedia(info.absoluteFilePath()));
     }
     qDebug() << "Content: " << contentList.count();
 

@@ -26,13 +26,14 @@ Window {
 
     Timer {
         id : tim
-        interval: 2000
+        interval: 3000
         running: true
         repeat: true
         onTriggered: {
             ++idx;
             text1.text = idx
-            console.log(fileList)
+            console.log(idx+" "+listView.model[idx].path)
+            divImage.source = listView.model[idx].path
         }
     }
 
@@ -139,9 +140,9 @@ Window {
 
         ListView {
             id: listView
-            x: 522
+            x: 489
             y: 8
-            width: 110
+            width: 143
             height: 160
             model: fileDataModel
             delegate: Item {
@@ -150,7 +151,7 @@ Window {
                 width: 80
                 height: 40
                 Row {
-                    id: row1
+                    // id: row1
                     Rectangle {
                         width: 40
                         height: 40
@@ -158,7 +159,7 @@ Window {
                     }
 
                     Text {
-                        text: "Q "+modelData.path
+                        text: modelData.path
                         anchors.verticalCenter: parent.verticalCenter
                         font.bold: true
                     }
