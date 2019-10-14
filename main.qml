@@ -18,7 +18,7 @@ Window {
     id: window
     visible: true
     width: 640
-    height: 520
+    height: 600
     title: qsTr("QtComuneQml")
 
 
@@ -31,9 +31,11 @@ Window {
         repeat: true
         onTriggered: {
             ++idx;
+            if (idx >= listView.model.length) idx = 0
+
             text1.text = idx
             console.log(idx+" "+listView.model[idx].path)
-            divImage.source = listView.model[idx].path
+            divImage.source = "file:///"+listView.model[idx].path
         }
     }
 
@@ -110,29 +112,23 @@ Window {
 
         Image {
             id: divImage
-            x: 211
-            y: 40
+            x: 170
+            y: 13
             width: 300
             height: 325
+            fillMode: Image.PreserveAspectFit
             source: fileList
 
             /* Connections {
                 target: fileList
                 onDataChanged: console.log("The application data changed!")
             } */
-
-            MouseArea {
-                onClicked: {
-                    console.log("Click")
-                    setTi
-                }
-            }
         }
 
         Video {
             id: divVideo
             x: 8
-            y: 62
+            y: 39
             width: 200
             height: 200
 
@@ -143,7 +139,7 @@ Window {
             x: 489
             y: 8
             width: 143
-            height: 160
+            height: 122
             model: fileDataModel
             delegate: Item {
                 id: itemRowFile

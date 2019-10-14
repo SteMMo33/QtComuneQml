@@ -3,6 +3,5 @@
         <file>main.qml</file>
         <file>images/Langhirano-Stemma.png</file>
         <file>images/ParmaCalcio.png</file>
-        <file>main.cpp</file>
     </qresource>
 </RCC>
