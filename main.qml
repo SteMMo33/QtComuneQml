@@ -18,24 +18,54 @@ Window {
     id: window
     visible: true
     width: 640
-    height: 600
+    height: 750
     title: qsTr("QtComuneQml")
 
 
-    property int idx : 0;
+    property int idx : -1;
 
     Timer {
         id : tim
-        interval: 3000
+        interval: 4000
         running: true
-        repeat: true
+        repeat: false
         onTriggered: {
             ++idx;
             if (idx >= listView.model.length) idx = 0
 
             text1.text = idx
             console.log(idx+" "+listView.model[idx].path)
-            divImage.source = "file:///"+listView.model[idx].path
+
+            if (show(listView.model[idx].path)){
+                console.log("Video ")
+                divVideo.source = "file:///"+listView.model[idx].path
+                if (!divVideo.visible){
+                    console.log("Video1 "+divVideo.duration)
+                    divVideo.visible = true
+                    divImage.visible = false
+                    divVideo.play()
+                }
+                tim.interval = listView.model[idx].duration*1000
+                tim.start()
+            }
+            else {
+                console.log("Immagine ")
+                divImage.source = "file:///"+listView.model[idx].path
+                if (!divImage.visible){
+                    console.log("Immagine 1")
+                    divImage.visible = true
+                    divVideo.visible = false
+                    divVideo.stop()
+                }
+                tim.interval = listView.model[idx].duration*1000
+                tim.start()
+            }
+        }
+
+        function show(content){
+            if ((content.indexOf(".mp4")!==-1) || (content.indexOf(".webm")!==-1))
+                return 1;
+            return 0;
         }
     }
 
@@ -80,10 +110,10 @@ Window {
 
         Image {
             id: image
-            x: 270
-            y: 27
-            width: 100
-            height: 100
+            x: 259
+            y: 8
+            width: 122
+            height: 114
             fillMode: Image.PreserveAspectFit
             source: "images/Langhirano-Stemma.png"
         }
@@ -112,13 +142,15 @@ Window {
 
         Image {
             id: divImage
-            x: 170
-            y: 13
-            width: 300
-            height: 325
+            x: 118
+            width: 428
+            anchors.top: parent.top
+            anchors.topMargin: 12
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 8
             fillMode: Image.PreserveAspectFit
-            source: fileList
-
+            // source: fileList
+            visible: false
             /* Connections {
                 target: fileList
                 onDataChanged: console.log("The application data changed!")
@@ -127,11 +159,11 @@ Window {
 
         Video {
             id: divVideo
-            x: 8
-            y: 39
-            width: 200
-            height: 200
-
+            x: 52
+            y: 31
+            width: 537
+            height: 439
+            visible: false
         }
 
         ListView {
@@ -139,7 +171,7 @@ Window {
             x: 489
             y: 8
             width: 143
-            height: 122
+            height: 190
             model: fileDataModel
             delegate: Item {
                 id: itemRowFile
@@ -168,7 +200,7 @@ Window {
             id: text1
             x: 8
             y: 8
-            text: qsTr("NN")
+            text: qsTr("--")
             font.bold: true
             font.pixelSize: 22
         }

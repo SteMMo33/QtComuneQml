@@ -1,4 +1,10 @@
 
+/**
+
+  Piattaforma Windows
+  Installato il pacchetto K-Lite Codec Basic per vedere i video
+
+  */
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -25,8 +31,8 @@ int main(int argc, char *argv[])
     // Leggere i files contenuti in una cartella predefinita
     // e creare una lista
 
-    QDir dir = QDir("/home/stefano/Scrivania/Foto/2012 Oltre");
-    // QDir dir = QDir("C:\\Users\\A.Rubiconi\\Pictures\\Screenshots");
+    //QDir dir = QDir("/home/stefano/Scrivania/Foto/2012 Oltre");
+    QDir dir = QDir("C:\\Users\\A.Rubiconi\\Downloads\\contents");
 
     QFileInfoList infoList = dir.entryInfoList();
     QStringList stringList = dir.entryList();
