@@ -9,9 +9,9 @@ Window {
 
     onFileListChanged: {
         console.log("Lista:")
-            for(var property in fileList)
-                console.log(property)
-            console.log("fine Lista")
+        for(var property in fileList)
+            console.log(property)
+        console.log("fine Lista")
     }
 
 
@@ -26,33 +26,34 @@ Window {
 
     Timer {
         id : tim
-        interval: 4000
+        interval: 500
         running: true
         repeat: false
         onTriggered: {
+
+            console.log("fileList: "+fileList)
+
             ++idx;
             if (idx >= listView.model.length) idx = 0
 
             text1.text = idx
-            console.log(idx+" "+listView.model[idx].path)
+            console.log("n."+idx+" "+listView.model[idx].path)
 
             if (show(listView.model[idx].path)){
-                console.log("Video ")
                 divVideo.source = "file:///"+listView.model[idx].path
+                console.log("Video dur:"+divVideo.duration)
                 if (!divVideo.visible){
-                    console.log("Video1 "+divVideo.duration)
                     divVideo.visible = true
                     divImage.visible = false
                     divVideo.play()
                 }
-                tim.interval = listView.model[idx].duration*1000
-                tim.start()
+                //tim.interval = listView.model[idx].duration*1000
+                //tim.start()
             }
             else {
                 console.log("Immagine ")
                 divImage.source = "file:///"+listView.model[idx].path
                 if (!divImage.visible){
-                    console.log("Immagine 1")
                     divImage.visible = true
                     divVideo.visible = false
                     divVideo.stop()
@@ -61,6 +62,7 @@ Window {
                 tim.start()
             }
         }
+
 
         function show(content){
             if ((content.indexOf(".mp4")!==-1) || (content.indexOf(".webm")!==-1))
@@ -110,10 +112,12 @@ Window {
 
         Image {
             id: image
-            x: 259
             y: 8
-            width: 122
             height: 114
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
             fillMode: Image.PreserveAspectFit
             source: "images/Langhirano-Stemma.png"
         }
@@ -142,12 +146,14 @@ Window {
 
         Image {
             id: divImage
-            x: 118
-            width: 428
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.left: parent.left
+            anchors.leftMargin: 20
             anchors.top: parent.top
-            anchors.topMargin: 12
+            anchors.topMargin: 10
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 8
+            anchors.bottomMargin: 10
             fillMode: Image.PreserveAspectFit
             // source: fileList
             visible: false
@@ -159,11 +165,17 @@ Window {
 
         Video {
             id: divVideo
-            x: 52
-            y: 31
-            width: 537
-            height: 439
+            anchors.rightMargin: 10
+            anchors.leftMargin: 10
+            anchors.bottomMargin: 10
+            anchors.topMargin: 10
+            anchors.fill: parent
             visible: false
+            onStopped: {
+                tim.interval = 100
+                tim.start()
+                console.log("onStopped")
+            }
         }
 
         ListView {
@@ -172,6 +184,7 @@ Window {
             y: 8
             width: 143
             height: 190
+            visible: false
             model: fileDataModel
             delegate: Item {
                 id: itemRowFile
@@ -179,7 +192,7 @@ Window {
                 width: 80
                 height: 40
                 Row {
-                    // id: row1
+                    id: row1
                     Rectangle {
                         width: 40
                         height: 40
@@ -198,14 +211,12 @@ Window {
 
         Text {
             id: text1
-            x: 8
-            y: 8
+            x: 0
+            y: 0
             text: qsTr("--")
             font.bold: true
             font.pixelSize: 22
         }
     }
-
-
 
 }

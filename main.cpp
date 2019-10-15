@@ -55,7 +55,8 @@ int main(int argc, char *argv[])
     // Passa la lista al QML o passa la path immagine
     qDebug() << "--> " << stringList;
 
-    context->setContextProperty("fileList", QVariant::fromValue(contentList));
+    context->setContextProperty("fileList", QVariant::fromValue(contentList));  // ?
+
     context->setContextProperty("fileDataModel", QVariant::fromValue(contentList));
 
     // context->setContextProperty("fileDataModel", stringList); - ok con text: "Q "+modelData
