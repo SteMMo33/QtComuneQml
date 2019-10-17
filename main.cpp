@@ -16,6 +16,9 @@
 
 
 
+QList<QObject*> contentList;
+QStringList stringList;
+
 /**
  * @brief main
  * @param argc
@@ -35,8 +38,7 @@ int main(int argc, char *argv[])
     QDir dir = QDir("C:\\Users\\A.Rubiconi\\Downloads\\contents");
 
     QFileInfoList infoList = dir.entryInfoList();
-    QStringList stringList = dir.entryList();
-    QList<QObject*> contentList;
+    stringList = dir.entryList();
 
     qDebug() << "List: " << infoList.count();
     for (int i=0; i < infoList.count(); i++){
@@ -55,7 +57,7 @@ int main(int argc, char *argv[])
     // Passa la lista al QML o passa la path immagine
     qDebug() << "--> " << stringList;
 
-    context->setContextProperty("fileList", QVariant::fromValue(contentList));  // ?
+    context->setContextProperty("fileList", &contentList); // QVariant::fromValue(contentList));  // ?
 
     context->setContextProperty("fileDataModel", QVariant::fromValue(contentList));
 

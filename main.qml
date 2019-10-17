@@ -114,11 +114,11 @@ Window {
             id: image
             y: 8
             height: 114
+            fillMode: Image.PreserveAspectFit
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
-            fillMode: Image.PreserveAspectFit
             source: "images/Langhirano-Stemma.png"
         }
 
