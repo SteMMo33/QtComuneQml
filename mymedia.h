@@ -11,7 +11,7 @@ class MyMedia : public QObject
     Q_PROPERTY(int duration READ duration WRITE setDuration NOTIFY durationChanged)
 
 public:
-    MyMedia(QString path, int duration = 10);
+    MyMedia(QString path, int duration = 10, QObject* parent = nullptr);
 
     QString path() const;
     int duration() const;

@@ -3,7 +3,7 @@
 #include "mymedia.h"
 
 
-MyMedia::MyMedia(QString path, int duration) : m_path(path), m_duration(duration)
+MyMedia::MyMedia(QString path, int duration, QObject* parent) : m_path(path), m_duration(duration), QObject(parent)
 {
 
 }

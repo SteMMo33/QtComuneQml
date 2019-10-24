@@ -5,7 +5,7 @@ import QtMultimedia 5.5
 
 Window {
 
-    property var fileList
+    /* property var fileList - arriva dal C++ - non deve essere definita pena sovrapposizione
 
     onFileListChanged: {
         console.log("Lista:")
@@ -13,7 +13,7 @@ Window {
             console.log(property)
         console.log("fine Lista")
     }
-
+      */
 
     id: window
     visible: true
@@ -31,7 +31,8 @@ Window {
         repeat: false
         onTriggered: {
 
-            console.log("fileList: "+fileList)
+            console.log("fileList: ")
+            console.log(fileList)
 
             ++idx;
             if (idx >= listView.model.length) idx = 0
