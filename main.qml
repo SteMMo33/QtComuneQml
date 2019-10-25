@@ -31,29 +31,24 @@ Window {
         repeat: false
         onTriggered: {
 
-            console.log("fileList: ")
-            console.log(fileList)
-
             ++idx;
-            if (idx >= listView.model.length) idx = 0
+            if (idx >= fileList.length) idx = 0
 
             text1.text = idx
-            console.log("n."+idx+" "+listView.model[idx].path)
+            console.log("n."+idx+" "+fileList[idx].path)
 
-            if (show(listView.model[idx].path)){
-                divVideo.source = "file:///"+listView.model[idx].path
+            if (show(fileList[idx].path)){
+                divVideo.source = "file:///"+fileList[idx].path
                 console.log("Video dur:"+divVideo.duration)
                 if (!divVideo.visible){
                     divVideo.visible = true
                     divImage.visible = false
                     divVideo.play()
                 }
-                //tim.interval = listView.model[idx].duration*1000
-                //tim.start()
             }
             else {
                 console.log("Immagine ")
-                divImage.source = "file:///"+listView.model[idx].path
+                divImage.source = "file:///"+fileList[idx].path
                 if (!divImage.visible){
                     divImage.visible = true
                     divVideo.visible = false
