@@ -34,7 +34,7 @@ Window {
             ++idx;
             if (idx >= fileList.length) idx = 0
 
-            text1.text = idx
+            idContent.text = idx
             console.log("n."+idx+" "+fileList[idx].path)
 
             if (show(fileList[idx].path)){
@@ -69,7 +69,7 @@ Window {
 
     Rectangle {
         id: idHeader
-        height: 250
+        height: 300
         color: "#9d89ff"
         anchors.right: parent.right
         anchors.rightMargin: 0
@@ -89,21 +89,21 @@ Window {
             anchors.rightMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
-            font.pixelSize: 44
+            font.pixelSize: 46
         }
 
         Text {
             id: txtSottotitolo
             x: 0
             y: 193
-            color: "#3ffbb2"
+            color: "#d53e13"
             text: qsTr("Tel. 0521/351111\nFax 0521/858240\ne.mail comune@comune.langhirano.pr.it")
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 14
+            font.pixelSize: 16
         }
 
         Image {
@@ -147,16 +147,11 @@ Window {
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: parent.top
-            anchors.topMargin: 10
+            anchors.topMargin: 50
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 10
+            anchors.bottomMargin: 50
             fillMode: Image.PreserveAspectFit
-            // source: fileList
             visible: false
-            /* Connections {
-                target: fileList
-                onDataChanged: console.log("The application data changed!")
-            } */
         }
 
         Video {
@@ -206,7 +201,7 @@ Window {
         }
 
         Text {
-            id: text1
+            id: idContent
             x: 0
             y: 0
             text: qsTr("--")

@@ -1,10 +1,11 @@
 TEMPLATE = app
 
-QT += qml quick multimedia
+QT += qml quick multimedia sql websockets
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    mymedia.cpp
+    mymedia.cpp \
+    websocketserver.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,4 +35,5 @@ DISTFILES += \
     Langhirano.png \
 
 HEADERS += \
-    mymedia.h
+    mymedia.h \
+    websocketserver.h

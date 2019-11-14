@@ -11,9 +11,12 @@
 #include <QQmlContext>
 #include <QDir>
 #include <QDebug>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QtSql>
 
 #include "mymedia.h"
-
+#include "websocketserver.h"
 
 
 QList<QObject*> contentList;
@@ -31,35 +34,64 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    // Leggere i files contenuti in una cartella predefinita
-    // e creare una lista
+    // Apertura databse MySql
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("localhost");
+    db.setDatabaseName("kiosk");
+    db.setUserName("root");
+    db.setPassword("amtek");
 
-    //QDir dir = QDir("/home/stefano/Scrivania/Foto/2012 Oltre");
-    QDir dir = QDir("C:\\Users\\A.Rubiconi\\Downloads\\contents");
+    bool ok = db.open();
 
-    QFileInfoList infoList = dir.entryInfoList();
-    stringList = dir.entryList();
+    if (ok){
+		qDebug() << "Database aperto ..";
+		qDebug() << "Query contents ..";
 
-    qDebug() << "List: " << infoList.count();
-    for (int i=0; i < infoList.count(); i++){
-        QFileInfo info = infoList[i];
-
-        if (info.isDir()) continue;
-
-        contentList.append( new MyMedia(info.absoluteFilePath()));
+        QSqlQueryModel model;
+        model.setQuery("SELECT * FROM contents");
+        for (int i = 0; i < model.rowCount(); ++i) {
+            int id = model.record(i).value("id").toInt();
+            QString name = "home/pi/Desktop/QtComuneQml/contents/"+model.record(i).value("path").toString();
+            int duration = model.record(i).value("duration").toInt();
+            qDebug() << id << name << duration;
+			
+			contentList.append( new MyMedia(name, duration));
+        }
+        db.close();
     }
-    qDebug() << "Content: " << contentList.count();
+	else {
 
+		qDebug() << "Errore apertura DB - carico img da cartella\n";
 
-    //SM Collegamento tra C++ e QML
+		QDir dir = QDir(".//contents");
+
+		QFileInfoList infoList = dir.entryInfoList();
+		stringList = dir.entryList();
+		qDebug() << "-> " << stringList;
+
+		qDebug() << "List: " << infoList.count();
+		for (int i=0; i < infoList.count(); i++){
+			QFileInfo info = infoList[i];
+
+			if (info.isDir()) continue;
+			contentList.append( new MyMedia(info.absoluteFilePath()));
+		}
+		qDebug() << "Content: " << contentList.count();
+	}
+
+	// Carica il server websocket per interazione esterna
+	int port = 1111;
+	bool debug = true;
+	WebSocketServer *server = new WebSocketServer(port, debug);
+    // QObject::connect(server, &WebSocketServer::closed, &a, &QCoreApplication::quit);
+	
+    // Collegamento tra C++ e QML
     QQmlContext *context = engine.rootContext();
 
     // Passa la lista al QML o passa la path immagine
-    qDebug() << "--> " << stringList;
 
     // context->setContextProperty("fileList", &contentList); // Errore
     context->setContextProperty("fileList", QVariant::fromValue(contentList));
-
     context->setContextProperty("fileDataModel", QVariant::fromValue(contentList));
 
     // context->setContextProperty("fileDataModel", stringList); - ok con text: "Q "+modelData
